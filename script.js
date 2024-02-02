@@ -1,35 +1,32 @@
 const canvas = document.getElementById("actionButton");
 const ctx = canvas.getContext("2d");
 
-drawButton(ctx);
+drawButton();
 
+/* Show the pressed version of the button briefly */
 function pressButton() {
-    clearCanvas(canvas);
-    drawPressedButton(ctx);
+    clearCanvas();
+    drawPressedButton();
 
     let id = null;
     clearInterval(id);
     id = setInterval(frame, 350);
 
     function frame() {
-        clearCanvas(canvas);
-        drawButton(ctx);
+        clearCanvas();
+        drawButton();
         clearInterval(id);
     }
 }
 
-function drawButton(ctx) {
-    drawFrontLayer(ctx, buttonValues, sharedButtonValues);
-    drawIntermediateLayer(ctx, buttonValues, sharedButtonValues);
-    drawBackgroundLayer(ctx, buttonValues, sharedButtonValues);
+function drawButton() {
+    drawLayers(ctx, buttonValues, sharedButtonValues);
 }
 
-function drawPressedButton(ctx) {
-    drawFrontLayer(ctx, pressedButtonValues, sharedButtonValues);
-    drawIntermediateLayer(ctx, pressedButtonValues, sharedButtonValues);
-    drawBackgroundLayer(ctx, pressedButtonValues, sharedButtonValues);
+function drawPressedButton() {
+    drawLayers(ctx, pressedButtonValues, sharedButtonValues);
 }
 
-function clearCanvas(canvas) {
+function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
