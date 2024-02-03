@@ -1,12 +1,13 @@
 function drawLayers(ctx, buttonValues, sharedButtonValues) {
     drawFrontLayer(ctx, buttonValues, sharedButtonValues);
-    drawIntermediateLayer(ctx, buttonValues, sharedButtonValues);
     drawBackgroundLayer(ctx, buttonValues, sharedButtonValues);
+    drawIntermediateLayer(ctx, buttonValues, sharedButtonValues);
 }
 
 function drawFrontLayer(ctx, buttonValues, sharedButtonValues) {
     const frontLayer = buttonValues.frontLayer;
 
+    ctx.strokeStyle = sharedButtonValues.OUTLINE_COLOR;
     drawTopLine(ctx, { layer: frontLayer, ...buttonValues }, sharedButtonValues);
     drawRightLine(ctx, { layer: frontLayer, ...buttonValues }, sharedButtonValues);
     drawBottomLine(ctx, { layer: frontLayer, ...buttonValues }, sharedButtonValues);
@@ -21,18 +22,20 @@ function drawFrontLayer(ctx, buttonValues, sharedButtonValues) {
 }
 
 function drawIntermediateLayer(ctx, buttonValues, sharedButtonValues) {
+    ctx.strokeStyle = sharedButtonValues.OUTLINE_COLOR
     drawTopRightSlantLine(ctx, buttonValues, sharedButtonValues);
     drawBottomLeftSlantLine(ctx, buttonValues, sharedButtonValues);
 
     drawSlantLinesOnRight(ctx, buttonValues, sharedButtonValues);
     drawSlantLinesOnBottom(ctx, buttonValues, sharedButtonValues);
 
-    drawBottomRightCornerLines(ctx, buttonValues, sharedButtonValues);
+    drawBottomRightCornerSlantLines(ctx, buttonValues, sharedButtonValues);
 }
 
 function drawBackgroundLayer(ctx, buttonValues, sharedButtonValues) {
     const backgroundLayer = buttonValues.backgroundLayer;
 
+    ctx.strokeStyle = sharedButtonValues.OUTLINE_COLOR;
     drawRightLine(ctx, { layer: backgroundLayer, ...buttonValues }, sharedButtonValues);
     drawBottomLine(ctx, { layer: backgroundLayer, ...buttonValues }, sharedButtonValues);
 
@@ -50,7 +53,6 @@ function drawTopLine(ctx, buttonValues, sharedButtonValues) {
     ctx.moveTo(TOP_LEFT_CORNER.x + ARC_RADIUS, TOP_LEFT_CORNER.y);
     ctx.lineTo(TOP_RIGHT_CORNER.x - ARC_RADIUS, TOP_RIGHT_CORNER.y);
     ctx.stroke();
-    resetStyles(ctx);
 }
 
 function drawRightLine(ctx, buttonValues, sharedButtonValues) {
@@ -62,7 +64,6 @@ function drawRightLine(ctx, buttonValues, sharedButtonValues) {
     ctx.moveTo(TOP_RIGHT_CORNER.x, TOP_RIGHT_CORNER.y + ARC_RADIUS);
     ctx.lineTo(BOTTOM_RIGHT_CORNER.x, BOTTOM_RIGHT_CORNER.y - ARC_RADIUS);
     ctx.stroke();
-    resetStyles(ctx);
 }
 
 function drawBottomLine(ctx, buttonValues, sharedButtonValues) {
@@ -74,7 +75,6 @@ function drawBottomLine(ctx, buttonValues, sharedButtonValues) {
     ctx.moveTo(BOTTOM_RIGHT_CORNER.x - ARC_RADIUS, BOTTOM_RIGHT_CORNER.y);
     ctx.lineTo(BOTTOM_LEFT_CORNER.x + ARC_RADIUS, BOTTOM_LEFT_CORNER.y);
     ctx.stroke();
-    resetStyles(ctx);
 }
 
 function drawLeftLine(ctx, buttonValues, sharedButtonValues) {
@@ -86,7 +86,6 @@ function drawLeftLine(ctx, buttonValues, sharedButtonValues) {
     ctx.moveTo(BOTTOM_LEFT_CORNER.x, BOTTOM_LEFT_CORNER.y - ARC_RADIUS);
     ctx.lineTo(TOP_LEFT_CORNER.x, TOP_LEFT_CORNER.y + ARC_RADIUS);
     ctx.stroke();
-    resetStyles(ctx);
 }
 
 function drawTopRightArc(ctx, buttonValues, sharedButtonValues) {
@@ -97,7 +96,6 @@ function drawTopRightArc(ctx, buttonValues, sharedButtonValues) {
     ctx.beginPath();
     ctx.arc(TOP_RIGHT_CORNER.x - ARC_RADIUS, TOP_RIGHT_CORNER.y + ARC_RADIUS, ARC_RADIUS, 3 * Math.PI / 2, 0);
     ctx.stroke();
-    resetStyles(ctx);
 }
 
 function drawBottomRightArc(ctx, buttonValues, sharedButtonValues) {
@@ -108,7 +106,6 @@ function drawBottomRightArc(ctx, buttonValues, sharedButtonValues) {
     ctx.beginPath();
     ctx.arc(BOTTOM_RIGHT_CORNER.x - ARC_RADIUS, BOTTOM_RIGHT_CORNER.y - ARC_RADIUS, ARC_RADIUS, 0, Math.PI / 2);
     ctx.stroke();
-    resetStyles(ctx);
 }
 
 function drawBottomLeftArc(ctx, buttonValues, sharedButtonValues) {
@@ -119,7 +116,6 @@ function drawBottomLeftArc(ctx, buttonValues, sharedButtonValues) {
     ctx.beginPath();
     ctx.arc(BOTTOM_LEFT_CORNER.x + ARC_RADIUS, BOTTOM_LEFT_CORNER.y - ARC_RADIUS, ARC_RADIUS, Math.PI / 2, Math.PI);
     ctx.stroke();
-    resetStyles(ctx);
 }
 
 function drawTopLeftArc(ctx, buttonValues, sharedButtonValues) {
@@ -130,16 +126,15 @@ function drawTopLeftArc(ctx, buttonValues, sharedButtonValues) {
     ctx.beginPath();
     ctx.arc(TOP_LEFT_CORNER.x + ARC_RADIUS, TOP_LEFT_CORNER.y + ARC_RADIUS, ARC_RADIUS, Math.PI, 3 * Math.PI / 2);
     ctx.stroke();
-    resetStyles(ctx);
 }
 
 function drawText(ctx, buttonValues) {
-    const { START_X, START_Y } = buttonValues.layer;
+    const { TOP_LEFT_CORNER } = buttonValues.layer;
 
     ctx.font = "30px Arial";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillText("Submit", (WIDTH / 2) + START_X, (HEIGHT / 2) + START_Y);
+    ctx.fillText("Submit", (WIDTH / 2) + TOP_LEFT_CORNER.x, (HEIGHT / 2) + TOP_LEFT_CORNER.y);
 }
 
 function drawBottomLeftHalfArc(ctx, buttonValues, sharedButtonValues) {
@@ -150,7 +145,6 @@ function drawBottomLeftHalfArc(ctx, buttonValues, sharedButtonValues) {
     ctx.beginPath();
     ctx.arc(BOTTOM_LEFT_CORNER.x + ARC_RADIUS, BOTTOM_LEFT_CORNER.y - ARC_RADIUS, ARC_RADIUS, Math.PI / 2, 3 * Math.PI / 4);
     ctx.stroke();
-    resetStyles(ctx);
 }
 
 function drawTopRightHalfArc(ctx, buttonValues, sharedButtonValues) {
@@ -161,12 +155,10 @@ function drawTopRightHalfArc(ctx, buttonValues, sharedButtonValues) {
     ctx.beginPath();
     ctx.arc(TOP_RIGHT_CORNER.x - ARC_RADIUS, TOP_RIGHT_CORNER.y + ARC_RADIUS, ARC_RADIUS, 7 * Math.PI / 4, 0);
     ctx.stroke();
-    resetStyles(ctx);
 }
 
-function drawBottomRightCornerLines(ctx, buttonValues, sharedButtonValues) {
+function drawBottomRightCornerSlantLines(ctx, buttonValues, sharedButtonValues) {
     const { MINOR_LINE_WIDTH, SLANT_LINE_COLOR, ARC_RADIUS } = sharedButtonValues;
-    const { BOTTOM_RIGHT_CORNER } = buttonValues.frontLayer;
     const { BOTTOM_RIGHT_ARC_CORNER, SLANT_LENGTH_X, SLANT_LENGTH_Y } = buttonValues.intermediateLayer;
 
     ctx.strokeStyle = SLANT_LINE_COLOR;
@@ -174,12 +166,17 @@ function drawBottomRightCornerLines(ctx, buttonValues, sharedButtonValues) {
     ctx.beginPath();
     ctx.moveTo(BOTTOM_RIGHT_ARC_CORNER.x, BOTTOM_RIGHT_ARC_CORNER.y);
     ctx.lineTo(BOTTOM_RIGHT_ARC_CORNER.x + SLANT_LENGTH_X, BOTTOM_RIGHT_ARC_CORNER.y + SLANT_LENGTH_Y);
-    for (let i = 0; i < 3; i++) {
-        ctx.moveTo((BOTTOM_RIGHT_CORNER.x - ARC_RADIUS) + (Math.cos(i * Math.PI / 6) * ARC_RADIUS), (BOTTOM_RIGHT_CORNER.y - ARC_RADIUS) + (Math.sin(i * Math.PI / 6) * ARC_RADIUS));
-        ctx.lineTo((BOTTOM_RIGHT_CORNER.x - ARC_RADIUS) + (Math.cos(i * Math.PI / 6) * ARC_RADIUS) + SLANT_LENGTH_X, (BOTTOM_RIGHT_CORNER.y - ARC_RADIUS) + (i * Math.sin(Math.PI / 6) * ARC_RADIUS) + SLANT_LENGTH_Y);
+    // To the right of the center slant line
+    for (let i = 8; i >= 2; i /= 2) {
+        ctx.moveTo(BOTTOM_RIGHT_ARC_CORNER.x + ((Math.cos(i * Math.PI / 32) * ARC_RADIUS) - (Math.cos(Math.PI / 4) * ARC_RADIUS)), BOTTOM_RIGHT_ARC_CORNER.y + ((Math.sin(i * Math.PI / 32) * ARC_RADIUS) - (Math.sin(Math.PI / 4) * ARC_RADIUS)));
+        ctx.lineTo(BOTTOM_RIGHT_ARC_CORNER.x + ((Math.cos(i * Math.PI / 32) * ARC_RADIUS) - (Math.cos(Math.PI / 4) * ARC_RADIUS)) + SLANT_LENGTH_X, BOTTOM_RIGHT_ARC_CORNER.y + ((Math.sin(i * Math.PI / 32) * ARC_RADIUS) - (Math.sin(Math.PI / 4) * ARC_RADIUS)) + SLANT_LENGTH_Y);
+    }
+    // To the left of the center slant line
+    for (let i = 8; i >= 2; i /= 2) {
+        ctx.moveTo(BOTTOM_RIGHT_ARC_CORNER.x - ((Math.cos(i * Math.PI / 16) * ARC_RADIUS) - (Math.cos(Math.PI / 4) * ARC_RADIUS)), BOTTOM_RIGHT_ARC_CORNER.y + ((Math.sin(i * Math.PI / 16) * ARC_RADIUS) - (Math.sin(Math.PI / 4) * ARC_RADIUS)));
+        ctx.lineTo(BOTTOM_RIGHT_ARC_CORNER.x - ((Math.cos(i * Math.PI / 16) * ARC_RADIUS) - (Math.cos(Math.PI / 4) * ARC_RADIUS)) + SLANT_LENGTH_X, BOTTOM_RIGHT_ARC_CORNER.y + ((Math.sin(i * Math.PI / 16) * ARC_RADIUS) - (Math.sin(Math.PI / 4) * ARC_RADIUS)) + SLANT_LENGTH_Y);
     }
     ctx.stroke();
-    resetStyles(ctx);
 }
 
 function drawTopRightSlantLine(ctx, buttonValues, sharedButtonValues) {
@@ -191,7 +188,6 @@ function drawTopRightSlantLine(ctx, buttonValues, sharedButtonValues) {
     ctx.moveTo(TOP_RIGHT_ARC_CORNER.x, TOP_RIGHT_ARC_CORNER.y);
     ctx.lineTo(TOP_RIGHT_ARC_CORNER.x + SLANT_LENGTH_X, TOP_RIGHT_ARC_CORNER.y + SLANT_LENGTH_Y);
     ctx.stroke();
-    resetStyles(ctx);
 }
 
 function drawBottomLeftSlantLine(ctx, buttonValues, sharedButtonValues) {
@@ -203,11 +199,10 @@ function drawBottomLeftSlantLine(ctx, buttonValues, sharedButtonValues) {
     ctx.moveTo(BOTTOM_LEFT_ARC_CORNER.x, BOTTOM_LEFT_ARC_CORNER.y);
     ctx.lineTo(BOTTOM_LEFT_ARC_CORNER.x + SLANT_LENGTH_X, BOTTOM_LEFT_ARC_CORNER.y + SLANT_LENGTH_Y);
     ctx.stroke();
-    resetStyles(ctx);
 }
 
 function drawSlantLinesOnRight(ctx, buttonValues, sharedButtonValues) {
-    const { MAJOR_LINE_WIDTH, MINOR_LINE_WIDTH, SLANT_LINE_COLOR } = sharedButtonValues;
+    const { MAJOR_LINE_WIDTH, MINOR_LINE_WIDTH, SLANT_LINE_COLOR, SPACING_CONSTANT } = sharedButtonValues;
     const { TOP_RIGHT_CORNER, } = buttonValues.frontLayer;
     const { SLANT_LENGTH_X, SLANT_LENGTH_Y } = buttonValues.intermediateLayer;
 
@@ -215,15 +210,14 @@ function drawSlantLinesOnRight(ctx, buttonValues, sharedButtonValues) {
     ctx.lineWidth = MINOR_LINE_WIDTH;
     ctx.beginPath();
     for (let i = SPACING_CONSTANT; i < HEIGHT - MAJOR_LINE_WIDTH; i += SPACING_CONSTANT) {
-        ctx.moveTo(TOP_RIGHT_CORNER.x + MAJOR_LINE_WIDTH / 2, TOP_RIGHT_CORNER.y + MAJOR_LINE_WIDTH / 2 + i);
+        ctx.moveTo(TOP_RIGHT_CORNER.x, TOP_RIGHT_CORNER.y + i);
         ctx.lineTo(TOP_RIGHT_CORNER.x + SLANT_LENGTH_X, TOP_RIGHT_CORNER.y + SLANT_LENGTH_Y + i);
     }
     ctx.stroke();
-    resetStyles(ctx);
 }
 
 function drawSlantLinesOnBottom(ctx, buttonValues, sharedButtonValues) {
-    const { MAJOR_LINE_WIDTH, MINOR_LINE_WIDTH, SLANT_LINE_COLOR } = sharedButtonValues
+    const { MAJOR_LINE_WIDTH, MINOR_LINE_WIDTH, SLANT_LINE_COLOR, SPACING_CONSTANT } = sharedButtonValues
     const { BOTTOM_RIGHT_CORNER, } = buttonValues.frontLayer;
     const { SLANT_LENGTH_X, SLANT_LENGTH_Y } = buttonValues.intermediateLayer;
 
@@ -231,14 +225,8 @@ function drawSlantLinesOnBottom(ctx, buttonValues, sharedButtonValues) {
     ctx.lineWidth = MINOR_LINE_WIDTH;
     ctx.beginPath();
     for (let i = SPACING_CONSTANT; i < WIDTH - MAJOR_LINE_WIDTH; i += SPACING_CONSTANT) {
-        ctx.moveTo(BOTTOM_RIGHT_CORNER.x - i, BOTTOM_RIGHT_CORNER.y + MAJOR_LINE_WIDTH / 2);
-        ctx.lineTo(BOTTOM_RIGHT_CORNER.x - MAJOR_LINE_WIDTH / 2 + SLANT_LENGTH_X - i, BOTTOM_RIGHT_CORNER.y + SLANT_LENGTH_Y);
+        ctx.moveTo(BOTTOM_RIGHT_CORNER.x - i, BOTTOM_RIGHT_CORNER.y);
+        ctx.lineTo(BOTTOM_RIGHT_CORNER.x + SLANT_LENGTH_X - i, BOTTOM_RIGHT_CORNER.y + SLANT_LENGTH_Y);
     }
     ctx.stroke();
-    resetStyles(ctx);
-}
-
-function resetStyles(ctx) {
-    ctx.strokeStyle = "black";
-    ctx.lineWidth = 1;
 }

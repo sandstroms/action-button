@@ -1,19 +1,21 @@
-const FRONT_TOP_LEFT_CORNER = { x: FRONT_START_X, y: FRONT_START_Y };
-const FRONT_TOP_RIGHT_CORNER = { x: FRONT_START_X + WIDTH, y: FRONT_START_Y };
-const FRONT_BOTTOM_RIGHT_CORNER = { x: FRONT_START_X + WIDTH, y: FRONT_START_Y + HEIGHT };
-const FRONT_BOTTOM_LEFT_CORNER = { x: FRONT_START_X, y: FRONT_START_Y + HEIGHT };
+const TOTAL_WIDTH = WIDTH + 2 * MAJOR_LINE_WIDTH;
+const TOTAL_HEIGHT = HEIGHT + 2 * MAJOR_LINE_WIDTH;
+const FRONT_TOP_LEFT_CORNER = { x: 0, y: 0 };
+const FRONT_TOP_RIGHT_CORNER = { x: TOTAL_WIDTH, y: 0 };
+const FRONT_BOTTOM_RIGHT_CORNER = { x: TOTAL_WIDTH, y: TOTAL_HEIGHT };
+const FRONT_BOTTOM_LEFT_CORNER = { x: 0, y: TOTAL_HEIGHT };
 
 const sharedButtonValues = {
     ARC_RADIUS,
     MAJOR_LINE_WIDTH,
     MINOR_LINE_WIDTH,
-    SLANT_LINE_COLOR
+    SLANT_LINE_COLOR,
+    SPACING_CONSTANT,
+    OUTLINE_COLOR
 };
 
 const buttonValues = {
     frontLayer: {
-        START_X: FRONT_START_X,
-        START_Y: FRONT_START_Y,
         TOP_LEFT_CORNER: FRONT_TOP_LEFT_CORNER,
         TOP_RIGHT_CORNER: FRONT_TOP_RIGHT_CORNER,
         BOTTOM_RIGHT_CORNER: FRONT_BOTTOM_RIGHT_CORNER,
@@ -22,10 +24,10 @@ const buttonValues = {
     intermediateLayer: {
         TOP_RIGHT_ARC_CORNER: {
             x: (FRONT_TOP_RIGHT_CORNER.x - ARC_RADIUS) + (Math.cos(Math.PI / 4) * ARC_RADIUS), 
-            y: (FRONT_TOP_RIGHT_CORNER.y + ARC_RADIUS) - (Math.sin(Math.PI / 4) * ARC_RADIUS)
+            y: (FRONT_TOP_RIGHT_CORNER.y + ARC_RADIUS) - (Math.sin(Math.PI / 4) * ARC_RADIUS),
         },
         BOTTOM_RIGHT_ARC_CORNER: {
-            x: (FRONT_BOTTOM_RIGHT_CORNER.x - ARC_RADIUS) + (Math.cos(Math.PI / 4) * ARC_RADIUS),
+            x: (FRONT_BOTTOM_RIGHT_CORNER.x - ARC_RADIUS) + (Math.cos(Math.PI / 4) * ARC_RADIUS), 
             y: (FRONT_BOTTOM_RIGHT_CORNER.y - ARC_RADIUS) + (Math.sin(Math.PI / 4) * ARC_RADIUS)
         },
         BOTTOM_LEFT_ARC_CORNER: {
@@ -37,8 +39,7 @@ const buttonValues = {
             y: (FRONT_TOP_LEFT_CORNER.y + ARC_RADIUS) - (Math.sin(Math.PI / 4) * ARC_RADIUS)
         },
         SLANT_LENGTH_X: SLANT_X_LENGTH,
-        SLANT_LENGTH_Y: SLANT_Y_LENGTH,
-        SPACING_CONSTANT
+        SLANT_LENGTH_Y: SLANT_Y_LENGTH
     },
     backgroundLayer: {
         TOP_RIGHT_CORNER: {
@@ -94,8 +95,7 @@ const pressedButtonValues = {
             y: (PRESSED_FRONT_TOP_LEFT_CORNER.y + ARC_RADIUS) - (Math.sin(Math.PI / 4) * ARC_RADIUS)
         },
         SLANT_LENGTH_X: PRESSED_SLANT_X_LENGTH,
-        SLANT_LENGTH_Y: PRESSED_SLANT_Y_LENGTH,
-        SPACING_CONSTANT
+        SLANT_LENGTH_Y: PRESSED_SLANT_Y_LENGTH
     },
     backgroundLayer: {
         TOP_RIGHT_CORNER: {
