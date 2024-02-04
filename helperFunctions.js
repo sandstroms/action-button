@@ -1,8 +1,7 @@
 function drawLayers(ctx, buttonValues, sharedButtonValues) {
-
+    drawIntermediateLayer(ctx, buttonValues, sharedButtonValues);
     drawFrontLayer(ctx, buttonValues, sharedButtonValues);
     drawBackgroundLayer(ctx, buttonValues, sharedButtonValues);
-    drawIntermediateLayer(ctx, buttonValues, sharedButtonValues);
 }
 
 function drawFrontLayer(ctx, buttonValues, sharedButtonValues) {
@@ -27,8 +26,8 @@ function drawIntermediateLayer(ctx, buttonValues, sharedButtonValues) {
     drawTopRightSlantLine(ctx, buttonValues, sharedButtonValues);
     drawBottomLeftSlantLine(ctx, buttonValues, sharedButtonValues);
 
-    // drawSlantLinesOnRight(ctx, buttonValues, sharedButtonValues);
-    // drawSlantLinesOnBottom(ctx, buttonValues, sharedButtonValues);
+    drawSlantLinesOnRight(ctx, buttonValues, sharedButtonValues);
+    drawSlantLinesOnBottom(ctx, buttonValues, sharedButtonValues);
 
     drawBottomRightCornerSlantLines(ctx, buttonValues, sharedButtonValues);
 }
@@ -223,13 +222,13 @@ function drawBottomRightCornerSlantLines(ctx, buttonValues, sharedButtonValues) 
     ctx.strokeStyle = SLANT_LINE_COLOR;
     ctx.lineWidth = MINOR_LINE_WIDTH;
     ctx.beginPath();
-    // ctx.moveTo(BOTTOM_RIGHT_CORNER.x - ARC_RADIUS + (Math.cos(Math.PI / 4) * ARC_RADIUS), BOTTOM_RIGHT_CORNER.y - ARC_RADIUS + (Math.sin(Math.PI / 4) * ARC_RADIUS));
-    // ctx.lineTo(BOTTOM_RIGHT_CORNER.x - ARC_RADIUS + (Math.cos(Math.PI / 4) * ARC_RADIUS) + SLANT_LENGTH_X, BOTTOM_RIGHT_CORNER.y - ARC_RADIUS + (Math.sin(Math.PI / 4) * ARC_RADIUS) + SLANT_LENGTH_Y);
+    ctx.moveTo(BOTTOM_RIGHT_CORNER.x - ARC_RADIUS + (Math.cos(Math.PI / 4) * ARC_RADIUS), BOTTOM_RIGHT_CORNER.y - ARC_RADIUS + (Math.sin(Math.PI / 4) * ARC_RADIUS));
+    ctx.lineTo(BOTTOM_RIGHT_CORNER.x - ARC_RADIUS + (Math.cos(Math.PI / 4) * ARC_RADIUS) + SLANT_LENGTH_X, BOTTOM_RIGHT_CORNER.y - ARC_RADIUS + (Math.sin(Math.PI / 4) * ARC_RADIUS) + SLANT_LENGTH_Y);
     // // To the right of the center slant line
-    for (let i = 2; i < 16; i *= 2) {
-        ctx.moveTo(BOTTOM_RIGHT_CORNER.x - ARC_RADIUS + (Math.cos(Math.PI / 8 * i) * ARC_RADIUS), BOTTOM_RIGHT_CORNER.y - ARC_RADIUS + (Math.sin(Math.PI / 8 * i) * ARC_RADIUS));
-        ctx.lineTo(BOTTOM_RIGHT_CORNER.x - ARC_RADIUS + (Math.cos(Math.PI / 8 * i) * ARC_RADIUS) + SLANT_LENGTH_X, BOTTOM_RIGHT_CORNER.y - ARC_RADIUS + (Math.sin(Math.PI / 8 * i) * ARC_RADIUS) + SLANT_LENGTH_Y);
-    }
+    // for (let i = 1; i <= 3; i++) {
+    //     ctx.moveTo(BOTTOM_RIGHT_CORNER.x - ARC_RADIUS + (Math.cos(i * Math.PI / 6) * ARC_RADIUS), BOTTOM_RIGHT_CORNER.y - ARC_RADIUS + (Math.sin(i * Math.PI / 6) * ARC_RADIUS));
+    //     ctx.lineTo(BOTTOM_RIGHT_CORNER.x - ARC_RADIUS + (Math.cos(i * Math.PI / 6) * ARC_RADIUS) + SLANT_LENGTH_X, BOTTOM_RIGHT_CORNER.y - ARC_RADIUS + (Math.sin(i * Math.PI / 6) * ARC_RADIUS) + SLANT_LENGTH_Y);
+    // }
     // // To the left of the center slant line
     // for (let i = 8; i >= 2; i /= 2) {
     //     ctx.moveTo(BOTTOM_RIGHT_CORNER.x - ((Math.cos(i * Math.PI / 16) * ARC_RADIUS) - (Math.cos(Math.PI / 4) * ARC_RADIUS)), BOTTOM_RIGHT_CORNER.y + ((Math.sin(i * Math.PI / 16) * ARC_RADIUS) - (Math.sin(Math.PI / 4) * ARC_RADIUS)));
