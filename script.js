@@ -8,8 +8,7 @@ function draw() {
         canvas.width = MAJOR_LINE_WIDTH + WIDTH + SLANT_X_LENGTH + 230;
         canvas.height = MAJOR_LINE_WIDTH + HEIGHT + SLANT_Y_LENGTH + 230;
         
-        drawPressedButton(ctx, pressedButtonValues, sharedButtonValues);
-        // drawButton(ctx, buttonValues, sharedButtonValues);
+        drawButton(ctx, buttonValues, sharedButtonValues);
     }
 }
 
