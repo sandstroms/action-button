@@ -1,35 +1,47 @@
-const canvas = document.getElementById("actionButton");
-const ctx = canvas.getContext("2d");
+window.addEventListener("load", draw);
 
-canvas.width = MAJOR_LINE_WIDTH + WIDTH + SLANT_X_LENGTH;
-canvas.height = MAJOR_LINE_WIDTH + HEIGHT + SLANT_Y_LENGTH;
-
-drawButton();
-
-/* Show the pressed version of the button briefly */
-function pressButton() {
-    clearCanvas();
-    drawPressedButton();
-
-    let id = null;
-    clearInterval(id);
-    id = setInterval(frame, 350);
-
-    function frame() {
-        clearCanvas();
-        drawButton();
-        clearInterval(id);
+function draw() {
+    const canvas = document.getElementById("actionButton");
+    if (canvas.getContext) {
+        const ctx = canvas.getContext("2d");
+    
+        canvas.width = MAJOR_LINE_WIDTH + WIDTH + SLANT_X_LENGTH + 230;
+        canvas.height = MAJOR_LINE_WIDTH + HEIGHT + SLANT_Y_LENGTH + 230;
+        
+        drawPressedButton(ctx, pressedButtonValues, sharedButtonValues);
+        // drawButton(ctx, buttonValues, sharedButtonValues);
     }
 }
 
-function drawButton() {
+/* Show the pressed version of the button briefly */
+function pressButton() {
+    const canvas = document.getElementById("actionButton");
+    if (canvas.getContext) {
+        const ctx = canvas.getContext("2d");
+        clearCanvas(canvas, ctx);
+        drawPressedButton(ctx, pressedButtonValues, sharedButtonValues);
+
+        let id = null;
+        clearInterval(id);
+        id = setInterval(frame, 350);
+
+        function frame() {
+            clearCanvas(canvas, ctx);
+            drawButton(ctx, buttonValues, sharedButtonValues);
+            clearInterval(id);
+        }
+    }
+}
+
+function drawButton(ctx, buttonValues, sharedButtonValues) {
     drawLayers(ctx, buttonValues, sharedButtonValues);
 }
 
-function drawPressedButton() {
-    drawLayers(ctx, pressedButtonValues, sharedButtonValues);
+function drawPressedButton(ctx, buttonValues, sharedButtonValues) {
+    drawLayers(ctx, buttonValues, sharedButtonValues);
+    drawEffect(ctx, buttonValues, sharedButtonValues);
 }
 
-function clearCanvas() {
+function clearCanvas(canvas, ctx) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }

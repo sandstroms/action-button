@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
     <head>
+        <meta charset="utf-8" />
         <title>Action button</title>
+        <style>
+            canvas {
+                margin: 100px;
+                border: 1px solid brown;
+            }
+        </style>
     </head>
     <body>
-        <canvas style="margin-top: 75px; margin-left: 75px; border: 1px solid brown;" id="actionButton" onclick="pressButton()" width="1000" height="1000"></canvas>
+        <canvas id="actionButton" onclick="pressButton()"></canvas>
 
         <script src="constants.js"></script>
         <script src="helperConstants.js"></script>
