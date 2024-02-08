@@ -5,8 +5,8 @@ function draw() {
     if (canvas.getContext) {
         const ctx = canvas.getContext("2d");
     
-        canvas.width = MAJOR_LINE_WIDTH + WIDTH + SLANT_X_LENGTH + 230;
-        canvas.height = MAJOR_LINE_WIDTH + HEIGHT + SLANT_Y_LENGTH + 230;
+        canvas.width = OUTLINE_THICKNESS + WIDTH + SLANT_LENGTH + 230;
+        canvas.height = OUTLINE_THICKNESS + HEIGHT + SLANT_LENGTH + 230;
         
         drawButton(ctx, buttonValues, sharedButtonValues);
     }
