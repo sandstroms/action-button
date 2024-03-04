@@ -5,10 +5,10 @@ function draw() {
     if (canvas.getContext) {
         const ctx = canvas.getContext("2d");
     
-        canvas.width = OUTLINE_THICKNESS + WIDTH + SLANT_LENGTH + 230;
-        canvas.height = OUTLINE_THICKNESS + HEIGHT + SLANT_LENGTH + 230;
+        canvas.width = OUTLINE_THICKNESS + WIDTH + SLANT_LENGTH;
+        canvas.height = OUTLINE_THICKNESS + HEIGHT + SLANT_LENGTH;
         
-        drawButton(ctx, buttonValues, sharedButtonValues);
+        drawButton(ctx, buttonValues);
     }
 }
 
@@ -18,7 +18,7 @@ function pressButton() {
     if (canvas.getContext) {
         const ctx = canvas.getContext("2d");
         clearCanvas(canvas, ctx);
-        drawPressedButton(ctx, pressedButtonValues, sharedButtonValues);
+        drawPressedButton(ctx, pressedButtonValues);
 
         let id = null;
         clearInterval(id);
@@ -26,19 +26,19 @@ function pressButton() {
 
         function frame() {
             clearCanvas(canvas, ctx);
-            drawButton(ctx, buttonValues, sharedButtonValues);
+            drawButton(ctx, buttonValues);
             clearInterval(id);
         }
     }
 }
 
-function drawButton(ctx, buttonValues, sharedButtonValues) {
-    drawLayers(ctx, buttonValues, sharedButtonValues);
+function drawButton(ctx, buttonValues) {
+    drawLayers(ctx, buttonValues);
 }
 
-function drawPressedButton(ctx, buttonValues, sharedButtonValues) {
-    drawLayers(ctx, buttonValues, sharedButtonValues);
-    drawEffect(ctx, buttonValues, sharedButtonValues);
+function drawPressedButton(ctx, buttonValues) {
+    drawLayers(ctx, buttonValues);
+    drawEffect(ctx, buttonValues);
 }
 
 function clearCanvas(canvas, ctx) {
