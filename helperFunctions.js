@@ -148,43 +148,43 @@ function drawTopRightHalfArc(ctx, buttonValues) {
 function drawTopRightSlantLine(ctx, buttonValues) {
     const { frontLayer, intermediateLayer } = buttonValues;
     const { TOP_RIGHT_ARC_CORNER } = frontLayer;
-    const { SLANT_LENGTH } = intermediateLayer;
+    const { SLANT_LINE_LENGTH } = intermediateLayer;
 
     ctx.lineWidth = OUTLINE_THICKNESS;
     ctx.beginPath();
     ctx.moveTo(TOP_RIGHT_ARC_CORNER.x, TOP_RIGHT_ARC_CORNER.y);
-    ctx.lineTo(TOP_RIGHT_ARC_CORNER.x + SLANT_LENGTH, TOP_RIGHT_ARC_CORNER.y + SLANT_LENGTH);
+    ctx.lineTo(TOP_RIGHT_ARC_CORNER.x + SLANT_LINE_LENGTH, TOP_RIGHT_ARC_CORNER.y + SLANT_LINE_LENGTH);
     ctx.stroke();
 }
 
 function drawBottomLeftSlantLine(ctx, buttonValues) {
     const { frontLayer, intermediateLayer } = buttonValues;
     const { BOTTOM_LEFT_ARC_CORNER } = frontLayer;
-    const { SLANT_LENGTH } = intermediateLayer;
+    const { SLANT_LINE_LENGTH } = intermediateLayer;
 
     ctx.lineWidth = OUTLINE_THICKNESS;
     ctx.beginPath();
     ctx.moveTo(BOTTOM_LEFT_ARC_CORNER.x, BOTTOM_LEFT_ARC_CORNER.y);
-    ctx.lineTo(BOTTOM_LEFT_ARC_CORNER.x + SLANT_LENGTH, BOTTOM_LEFT_ARC_CORNER.y + SLANT_LENGTH);
+    ctx.lineTo(BOTTOM_LEFT_ARC_CORNER.x + SLANT_LINE_LENGTH, BOTTOM_LEFT_ARC_CORNER.y + SLANT_LINE_LENGTH);
     ctx.stroke();
 }
 
 function drawBottomRightCornerSlantLine(ctx, buttonValues) {
     const { frontLayer, intermediateLayer } = buttonValues;
     const { BOTTOM_RIGHT_ARC_CORNER } = frontLayer
-    const { SLANT_LENGTH } = intermediateLayer;
+    const { SLANT_LINE_LENGTH } = intermediateLayer;
 
     ctx.strokeStyle = SECONDARY_LINE_COLOR;
     ctx.lineWidth = SLANT_LINE_THICKNESS;
     ctx.beginPath();
     ctx.moveTo(BOTTOM_RIGHT_ARC_CORNER.x, BOTTOM_RIGHT_ARC_CORNER.y);
-    ctx.lineTo(BOTTOM_RIGHT_ARC_CORNER.x + SLANT_LENGTH, BOTTOM_RIGHT_ARC_CORNER.y + SLANT_LENGTH);
+    ctx.lineTo(BOTTOM_RIGHT_ARC_CORNER.x + SLANT_LINE_LENGTH, BOTTOM_RIGHT_ARC_CORNER.y + SLANT_LINE_LENGTH);
     ctx.stroke();
 }
 
 function drawSlantLinesOnRight(ctx, buttonValues) {
     const { TOP_RIGHT_CORNER } = buttonValues.frontLayer;
-    const { SLANT_LENGTH } = buttonValues.intermediateLayer;
+    const { SLANT_LINE_LENGTH } = buttonValues.intermediateLayer;
 
     const height = determineHeightOfCornerLines(buttonValues);
     const numLines = height / SPACING_CONSTANT;
@@ -195,15 +195,15 @@ function drawSlantLinesOnRight(ctx, buttonValues) {
     ctx.beginPath();
     let j = newSpacingConstant;
     for (let i = 1; i < numLines; i ++, j+= newSpacingConstant) {
-        ctx.moveTo(TOP_RIGHT_CORNER.x, TOP_RIGHT_CORNER.y + j);
-        ctx.lineTo(TOP_RIGHT_CORNER.x + SLANT_LENGTH, TOP_RIGHT_CORNER.y + SLANT_LENGTH + j);
+        ctx.moveTo(TOP_RIGHT_CORNER.x, (TOP_RIGHT_CORNER.y + CORNER_RADIUS) + j);
+        ctx.lineTo(TOP_RIGHT_CORNER.x + SLANT_LINE_LENGTH, (TOP_RIGHT_CORNER.y + CORNER_RADIUS) + SLANT_LINE_LENGTH + j);
     }
     ctx.stroke();
 }
 
 function drawSlantLinesOnBottom(ctx, buttonValues) {
     const { BOTTOM_LEFT_CORNER } = buttonValues.frontLayer;
-    const { SLANT_LENGTH } = buttonValues.intermediateLayer;
+    const { SLANT_LINE_LENGTH } = buttonValues.intermediateLayer;
 
     const width = determineWidthOfCornerLines(buttonValues);
     const numLines = width / SPACING_CONSTANT;
@@ -214,8 +214,8 @@ function drawSlantLinesOnBottom(ctx, buttonValues) {
     ctx.beginPath();
     let j = newSpacingConstant;
     for (let i = 1; i < numLines; i++, j+= newSpacingConstant) {
-        ctx.moveTo(BOTTOM_LEFT_CORNER.x + j, BOTTOM_LEFT_CORNER.y);
-        ctx.lineTo(BOTTOM_LEFT_CORNER.x + SLANT_LENGTH + j, BOTTOM_LEFT_CORNER.y + SLANT_LENGTH);
+        ctx.moveTo((BOTTOM_LEFT_CORNER.x + CORNER_RADIUS) + j, BOTTOM_LEFT_CORNER.y);
+        ctx.lineTo((BOTTOM_LEFT_CORNER.x + CORNER_RADIUS) + SLANT_LINE_LENGTH + j, BOTTOM_LEFT_CORNER.y + SLANT_LINE_LENGTH);
     }
     ctx.stroke();
 }
@@ -244,11 +244,11 @@ function drawEffect(ctx) {
 }
 
 function determineHeightOfCornerLines(buttonValues) {
-    const { BOTTOM_RIGHT_ARC_CORNER, TOP_RIGHT_ARC_CORNER } = buttonValues.frontLayer;
-    return BOTTOM_RIGHT_ARC_CORNER.y - TOP_RIGHT_ARC_CORNER.y;
+    const { BOTTOM_RIGHT_CORNER, TOP_RIGHT_CORNER } = buttonValues.frontLayer;
+    return (BOTTOM_RIGHT_CORNER.y - CORNER_RADIUS) - (TOP_RIGHT_CORNER.y + CORNER_RADIUS);
 }
 
 function determineWidthOfCornerLines(buttonValues) {
-    const { BOTTOM_RIGHT_ARC_CORNER, BOTTOM_LEFT_ARC_CORNER } = buttonValues.frontLayer;
-    return BOTTOM_RIGHT_ARC_CORNER.x - BOTTOM_LEFT_ARC_CORNER.x;
+    const { BOTTOM_RIGHT_CORNER, BOTTOM_LEFT_CORNER } = buttonValues.frontLayer;
+    return (BOTTOM_RIGHT_CORNER.x - CORNER_RADIUS) - (BOTTOM_LEFT_CORNER.x + CORNER_RADIUS);
 }
