@@ -1,5 +1,8 @@
 window.addEventListener("load", draw);
 
+const button = document.getElementById("actionButton");
+button.addEventListener("click", pressButton);
+
 function draw() {
     const canvas = document.getElementById("actionButton");
     if (canvas.getContext) {
